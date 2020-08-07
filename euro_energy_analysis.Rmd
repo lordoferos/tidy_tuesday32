@@ -15,6 +15,7 @@ library(tidymetrics)
 library(tidyverse)
 library(ggthemes)
 library(readr)
+library(stringr)
 ```
 
 ```{r message = FALSE}
@@ -26,6 +27,14 @@ energy_types <- read_csv('energy_types.csv')
 
 # Data on country totals
 ```{r}
-
+# Energy types by year
+options(scipen = 1000)
+country_totals %>% 
+  pivot_longer(cols = `2016`:`2018`, names_to = "year", values_to = "total") %>%
+  mutate(type = str_wrap(type, width = 10)) %>%
+  ggplot(aes(x = type, y = total, fill = year), group = year) +
+  geom_boxplot(outlier.shape = NA) +
+  ylim(0,175000) +
+  theme_bw()
 ```
 
