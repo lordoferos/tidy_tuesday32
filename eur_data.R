@@ -21,12 +21,12 @@ country_totals <- readr::read_csv('https://raw.githubusercontent.com/rfordatasci
 # Clean the data
 library(tidyverse)
 library(readxl)
-library(countrycode)
+library(countrycode) #remove 00LOCK folder if package fails to install
 
 raw_code <- countrycode::codelist %>% 
     select(country_name = country.name.en, country = eurostat)
 
-raw_excel <- read_excel("2020/2020-08-04/Electricity_generation_statistics_2019.xlsx", sheet = 3)
+raw_excel <- read_excel("Electricity_generation_statistics_2019.xlsx", sheet = 3)
   
 raw_excel %>% 
     filter(!is.na(...4)) %>% 
