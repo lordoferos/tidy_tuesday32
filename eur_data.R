@@ -38,7 +38,8 @@ raw_excel %>%
     fill(country) %>% 
   select(-c(...1, ...2, ...14:...18))
 
-row_stat <- read_excel("2020/2020-08-04/Electricity_generation_statistics_2019.xlsx", 
+
+row_stat <- read_excel("Electricity_generation_statistics_2019.xlsx", 
                        sheet = 3,
                        range = "C48:C61", col_names = FALSE)[[1]][c(1,3:14)] %>% 
   str_remove("[:digit:]") %>% 
@@ -48,7 +49,8 @@ row_stat <- read_excel("2020/2020-08-04/Electricity_generation_statistics_2019.x
 country_range <- tibble(row_start = seq(from = 46, to = 454, by = 34), 
        row_end = seq(from = 61, to = 469, by = 34)) %>% 
   mutate(col1 = 4, col2 = col1 + 5, col3 = col2 + 5) %>% 
-  pivot_longer(cols = col1:col3, names_to = "col_var", values_to = "col_start") %>% 
+  pivot_longer(cols = col1:col3, names_to = "col_var", 
+               values_to = "col_start") %>% 
   mutate(col_end = col_start + 2) %>% 
   select(-col_var) %>% 
   slice(-n(), -(n()-1)) %>% 
@@ -65,7 +67,7 @@ get_country_stats <- function(row_start, row_end, col_start, col_end, row_stat){
   
   # read in the data section quietly
   raw_data <- suppressMessages(
-    read_excel("2020/2020-08-04/Electricity_generation_statistics_2019.xlsx", 
+    read_excel("Electricity_generation_statistics_2019.xlsx", 
                          sheet = 3,
                          col_names = FALSE,
                          range = col_range))
@@ -120,6 +122,6 @@ country_totals %>%
   ggplot(aes(y = value, x = year, color = country, group = country)) +
   geom_line()
 
-write_csv(country_totals, "2020/2020-08-04/country_totals.csv")
+write_csv(country_totals, "country_totals.csv")
 
-write_csv(country_production, "2020/2020-08-04/energy_types.csv")
+write_csv(country_production, "energy_types.csv")
