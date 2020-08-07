@@ -1,0 +1,31 @@
+---
+title: "Analysis and Graphs"
+author: "lordoferos"
+date: "8/7/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r message = FALSE}
+# Load needed libraries
+library(tidymetrics)
+library(tidyverse)
+library(ggthemes)
+library(readr)
+```
+
+```{r message = FALSE}
+# Import the data
+country_totals <- read_csv('country_totals.csv')
+energy_types <- read_csv('energy_types.csv')
+```
+
+
+# Data on country totals
+```{r}
+
+```
+
